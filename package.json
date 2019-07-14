@@ -1,0 +1,22 @@
+{
+  "name": "convert-excel-js",
+  "version": "0.0.9",
+  "description": "",
+  "main": "null",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "convert-excel-js"
+  ],
+  "author": "PsChina",
+  "license": "MIT",
+  "dependencies": {
+    "exceljs": "^1.13.0",
+    "xlsx": "^0.14.3"
+  },
+  "bin": {
+    "excel": "excel.js",
+    "json": "json.js"
+  }
+}
