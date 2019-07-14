@@ -8,7 +8,7 @@ const argv2 = process.argv[2];
 let filePath;
 
 if(argv2.charAt('0')!=='/' && argv2.charAt('0')!=='~') {
-  filePath = path.resolve(process.env.PWD, argv2);
+  filePath = path.resolve(process.cwd(), argv2);
 } else {
   filePath = argv2;
 }
