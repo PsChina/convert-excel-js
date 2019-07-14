@@ -18,5 +18,9 @@
   "bin": {
     "excel": "excel.js",
     "json": "json.js"
+  },
+  "repository": {
+    "url": "https://github.com/PsChina/convert-excel-js",
+    "type": "git"
   }
 }
