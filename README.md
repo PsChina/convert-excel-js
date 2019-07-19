@@ -32,7 +32,7 @@ json ./filename.xlsx A B
 # json ./filename.xlsx A B fileName.js
 ```
 
-## add time stamp
+## Add time stamp
 
 If you expect the file name to record the time just insert `[time]` 'into the name for example:
 
