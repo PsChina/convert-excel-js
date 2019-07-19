@@ -7,7 +7,7 @@ const argv2 = process.argv[2];
 
 let filePath;
 
-if(argv2.charAt('0')!=='/' && argv2.charAt('0')!=='~') {
+if (argv2.charAt("0") !== "/" && argv2.charAt("0") !== "~") {
   filePath = path.resolve(process.cwd(), argv2);
 } else {
   filePath = argv2;
@@ -15,69 +15,69 @@ if(argv2.charAt('0')!=='/' && argv2.charAt('0')!=='~') {
 
 const data = require(filePath);
 
-function getName(path){
-  let filename = path.split('/').pop()
+function getName(path) {
+  let filename = path.split("/").pop();
 
-  if(filename.includes('.')){
-    filename = filename.split('.');
+  if (filename.includes(".")) {
+    filename = filename.split(".");
     filename.pop();
-    filename = filename.join('.')
+    filename = filename.join(".");
   }
-  return filename
+  return filename;
 }
 
 let filename;
 
-if(process.argv[3]) {
+if (process.argv[3]) {
   filename = getName(process.argv[3]);
 } else {
   filename = getName(filePath);
 }
 
-filename = `${filename}.xlsx`;
+filename = `${filename}.xlsx`.replace("[time]", new Date().toLocaleString());
 
-  var workbook = new Excel.stream.xlsx.WorkbookWriter({
-    filename,
-  });
-  var worksheet = workbook.addWorksheet("Sheet");
-  
-  worksheet.columns = [
-    { header: "key", key: "header"},
-    { header: "value", key: "value"},
-  ];
+const workbook = new Excel.stream.xlsx.WorkbookWriter({
+  filename
+});
+const worksheet = workbook.addWorksheet("Sheet");
 
-var dataArray = [];
+worksheet.columns = [
+  { header: "key", key: "header" },
+  { header: "value", key: "value" }
+];
+
+const dataArray = [];
 
 getTiledData(data, dataArray);
 
-var length = dataArray.length;
+const length = dataArray.length;
 
 // 当前进度
-var current_num = 0;
-var time_monit = 400;
-var temp_time = Date.now();
+let current_num = 0;
+const time_monit = 400;
+let temp_time = Date.now();
 
 // 开始添加数据
-for(let i in dataArray) {
+for (let i in dataArray) {
   worksheet.addRow(dataArray[i]).commit();
   current_num = i;
-  if(Date.now() - temp_time > time_monit) {
+  if (Date.now() - temp_time > time_monit) {
     temp_time = Date.now();
-    console.log((current_num / length * 100).toFixed(2) + "%");
+    console.log(((current_num / length) * 100).toFixed(2) + "%");
   }
 }
 workbook.commit();
-console.log('done');
+console.log("done");
 
-function getTiledData(data, arr, fatherKey = ""){
+function getTiledData(data, arr, fatherKey = "") {
   for (let key in data) {
-    if(typeof data[key] === "object"){
-      getTiledData(data[key], arr, fatherKey+key+".")
+    if (typeof data[key] === "object") {
+      getTiledData(data[key], arr, fatherKey + key + ".");
     } else {
       arr.push({
-        header:fatherKey+key.replace(".",""),
+        header: fatherKey + key.replace(".", ""),
         value: data[key]
-      })   
+      });
     }
   }
 }
