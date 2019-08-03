@@ -2,6 +2,8 @@
 
 const fs = require("fs");
 const XLSX = require("xlsx");
+const _zip = require('lodash.zip');
+const set = require("lodash.set");
 const buf = fs.readFileSync(process.argv[2]); // 待处理文件名
 const wb = XLSX.read(buf, { type: "buffer" });
 
@@ -19,33 +21,37 @@ for (const key in wb.Sheets.Sheet) {
 keys.shift();
 values.shift();
 
-function translateArraysToJSON(keys, value) {
+function translateArraysToJSON(keys, values) {
   const MyJSON = {};
-  let index = 0;
-  for (const item of keys) {
-    const currentKeys = item.split(".");
-    let currentKey = "";
-    for (let el of currentKeys) {
-      while (el.includes("-")) {
-        const caseIndex = el.indexOf("-") + 1;
-        let elArr = el.split("");
-        elArr[caseIndex] = elArr[caseIndex].toUpperCase();
-        el = elArr.join("");
-        el = el.replace("-", "");
-      }
-
-      if (!isNaN(parseInt(el))) {
-        currentKey += `["` + el + `"]`;
-      } else {
-        currentKey += "." + el;
-      }
-
-      if (!eval("MyJSON" + currentKey)) {
-        eval("MyJSON" + currentKey + "={}");
-      }
-    }
-    eval("MyJSON" + currentKey + "=" + "`" + value[index++] + "`");
-  }
+  const arr = _zip(keys, values); // 注意如果key里面带.符号,会导致问题
+  arr.forEach((item) => {
+    set(MyJSON, item[0], item[1]);
+  });
+  // let index = 0;
+  // for (const item of keys) {
+  //   const currentKeys = item.split(".");
+  //   let currentKey = "";
+  //   for (let el of currentKeys) {
+  //     while (el.includes("-")) {
+  //       const caseIndex = el.indexOf("-") + 1;
+  //       let elArr = el.split("");
+  //       elArr[caseIndex] = elArr[caseIndex].toUpperCase();
+  //       el = elArr.join("");
+  //       el = el.replace("-", "");
+  //     }
+  //
+  //     if (!isNaN(parseInt(el))) {
+  //       currentKey += `["` + el + `"]`;
+  //     } else {
+  //       currentKey += "." + el;
+  //     }
+  //
+  //     if (!eval("MyJSON" + currentKey)) {
+  //       eval("MyJSON" + currentKey + "={}");
+  //     }
+  //   }
+  //   eval("MyJSON" + currentKey + "=" + "`" + value[index++] + "`");
+  // }
   return MyJSON;
 }
 

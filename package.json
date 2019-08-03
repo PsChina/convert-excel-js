@@ -13,6 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "exceljs": "^1.13.0",
+    "lodash.set": "^4.3.2",
+    "lodash.zip": "^4.2.0",
     "xlsx": "^0.14.3"
   },
   "bin": {
