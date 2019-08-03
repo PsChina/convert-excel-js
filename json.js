@@ -26,20 +26,7 @@ function translateArraysToJSON(keys, value) {
     const currentKeys = item.split(".");
     let currentKey = "";
     for (let el of currentKeys) {
-      while (el.includes("-")) {
-        const caseIndex = el.indexOf("-") + 1;
-        let elArr = el.split("");
-        elArr[caseIndex] = elArr[caseIndex].toUpperCase();
-        el = elArr.join("");
-        el = el.replace("-", "");
-      }
-
-      if (!isNaN(parseInt(el))) {
-        currentKey += `["` + el + `"]`;
-      } else {
-        currentKey += "." + el;
-      }
-
+      currentKey += `["` + el + `"]`;
       if (!eval("MyJSON" + currentKey)) {
         eval("MyJSON" + currentKey + "={}");
       }
