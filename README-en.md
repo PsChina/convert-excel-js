@@ -1,24 +1,24 @@
-# 介绍
+# Introduce
 
-[English](./README-en.md)
+[中文文档](./README.md)
 
-这是一个应用程序国际化助手，可以帮助你在 json 和 excel 之间完成文件类型转换。
+This is an internationalization helper that helps you convert the files you want to internationalize between Json and Excel.
 
-## 使用 npm 安装
+## Install with npm
 
 ```bash
 npm install convert-excel-js -g
 ```
 
-## 使用 yarn 安装
+## Yarn
 
 ```bash
 yarn global add convert-excel-js
 ```
 
-## 如何使用
+## How to use it
 
-将 json 转换为 excel 。
+Convert json to excel
 
 `excel [filePath] [fileName]`
 ```bash
@@ -26,7 +26,7 @@ excel ./filename.json
 # excel ./filename.json appText
 ```
 
-将 excel 转换为 json 。
+Convert excel to json
 
 `json [filePath] [keyColumn] [valueColumn] [fileName]`
 ```bash
@@ -34,18 +34,18 @@ json ./filename.xlsx A B
 # json ./filename.xlsx A B fileName.js
 ```
 
-## 添加时间戳
+## Add time stamp
 
-如果你希望生成文件时记录时间，只需在文件名中插入`[time]`即可，例如:
+If you expect the file name to record the time just insert `[time]` 'into the name for example:
 
-将 json 转换为 excel 。
+Convert json to excel
 
 `excel [filePath] [fileName]`
 ```bash
 excel ./filename.json appText.[time].json
 ```
 
-将 excel 转换为 json 。
+Convert excel to json
 
 `json [filePath] [keyColumn] [valueColumn] [fileName]`
 ```bash
