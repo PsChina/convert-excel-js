@@ -5,26 +5,33 @@ const XLSX = require("xlsx");
 const buf = fs.readFileSync(process.argv[2]); // 待处理文件名
 const wb = XLSX.read(buf, { type: "buffer" });
 
+const TABLE_NAME = process.argv[3] || 'Sheet';
+
+const KEY_COLUMN_NAME = process.argv[4] || 'A';
+
+const VALUE_COLUMN_NAME = process.argv[5] || 'B';
+
+const EXPORT_FILE_NAME = process.argv[6] ||
+process.argv[2]
+  .split("/")
+  .pop()
+  .replace("xlsx", "json"); // 输出文件名
+
 const keys = [];
 const values = [];
 
-let firstTableName;
-for(const _key in wb.Sheets){
-  firstTableName = _key
-  break;
-}
-
-const data = wb.Sheets[firstTableName]
+const data = wb.Sheets[TABLE_NAME];
 
 for (const key in data) {
 
-  if (key.includes(process.argv[3])) {
+  if (key.includes(KEY_COLUMN_NAME)) {
     // key 所在列
     keys.push(data[key].v);
   }
 
-  if (key.includes(process.argv[4])) {
-    values.push(data[key].v); //value 所在列
+  if (key.includes(VALUE_COLUMN_NAME)) {
+    //value 所在列
+    values.push(data[key].v);
   }
 
 }
@@ -49,21 +56,15 @@ function translateArraysToJSON(keys, value) {
   return MyJSON;
 }
 
-let fileName =
-  process.argv[5] ||
-  process.argv[2]
-    .split("/")
-    .pop()
-    .replace("xlsx", "json"); // 输出文件名
-
-const fileNameArr = fileName.split(".");
+// 输出文件名
+const fileNameArr = EXPORT_FILE_NAME.split(".");
 
 let fileType = "any";
 if (fileNameArr.length >= 1) {
   fileType = fileNameArr.pop();
 }
 
-fileName = fileName.replace("[time]", new Date().toLocaleString());
+const fileName = EXPORT_FILE_NAME.replace("[time]", new Date().toLocaleString());
 
 if (fileType === "js") {
   fs.writeFileSync(

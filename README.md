@@ -28,10 +28,10 @@ excel ./filename.json
 
 将 excel 转换为 json 。
 
-`json [filePath] [keyColumn] [valueColumn] [fileName]`
+`json [filePath] [sheetName] [keyColumn] [valueColumn] [fileName]`
 ```bash
-json ./filename.xlsx A B
-# json ./filename.xlsx A B fileName.js
+json ./filename.xlsx 工作表1 A B
+# json ./filename.xlsx 工作表1 A B fileName.js
 ```
 
 ## 添加时间戳
@@ -47,7 +47,7 @@ excel ./filename.json appText.[time].json
 
 将 excel 转换为 json 。
 
-`json [filePath] [keyColumn] [valueColumn] [fileName]`
+`json [filePath] [sheetName] [keyColumn] [valueColumn] [fileName]`
 ```bash
-json ./filename.xlsx A B fileName.[time].js
+json ./filename.xlsx 工作表1 A B fileName.[time].js
 ```

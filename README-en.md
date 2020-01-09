@@ -28,10 +28,10 @@ excel ./filename.json
 
 Convert excel to json
 
-`json [filePath] [keyColumn] [valueColumn] [fileName]`
+`json [filePath] [sheetName] [keyColumn] [valueColumn] [fileName]`
 ```bash
-json ./filename.xlsx A B
-# json ./filename.xlsx A B fileName.js
+json ./filename.xlsx Sheet A B
+# json ./filename.xlsx Sheet A B fileName.js
 ```
 
 ## Add time stamp
@@ -47,7 +47,7 @@ excel ./filename.json appText.[time].json
 
 Convert excel to json
 
-`json [filePath] [keyColumn] [valueColumn] [fileName]`
+`json [filePath] [sheetName] [keyColumn] [valueColumn] [fileName]`
 ```bash
-json ./filename.xlsx A B fileName.[time].js
+json ./filename.xlsx Sheet A B fileName.[time].js
 ```
