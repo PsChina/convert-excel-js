@@ -7,13 +7,26 @@ const wb = XLSX.read(buf, { type: "buffer" });
 
 const keys = [];
 const values = [];
-for (const key in wb.Sheets.Sheet) {
+
+let firstTableName;
+for(const _key in wb.Sheets){
+  firstTableName = _key
+  break;
+}
+
+const data = wb.Sheets[firstTableName]
+
+for (const key in data) {
+
   if (key.includes(process.argv[3])) {
     // key 所在列
-    keys.push(wb.Sheets.Sheet[key].v);
-  } else if (key.includes(process.argv[4])) {
-    values.push(wb.Sheets.Sheet[key].v); //value 所在列
+    keys.push(data[key].v);
   }
+
+  if (key.includes(process.argv[4])) {
+    values.push(data[key].v); //value 所在列
+  }
+
 }
 
 keys.shift();
