@@ -34,7 +34,7 @@ if (process.argv[3]) {
   filename = getName(filePath);
 }
 
-filename = `${filename}.xlsx`.replace("[time]", new Date().toLocaleString());
+filename = `${filename}.xlsx`.replace("_time_", new Date().toLocaleString());
 
 const workbook = new Excel.stream.xlsx.WorkbookWriter({
   filename

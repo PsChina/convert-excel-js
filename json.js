@@ -94,7 +94,7 @@ if (fileNameArr.length >= 1) {
   fileType = fileNameArr.pop();
 }
 
-const fileName = EXPORT_FILE_NAME.replace("[time]", new Date().toLocaleString());
+const fileName = EXPORT_FILE_NAME.replace("_time_", new Date().toLocaleString());
 
 if (fileType === "js") {
   fs.writeFileSync(

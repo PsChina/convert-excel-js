@@ -36,18 +36,18 @@ json ./filename.xlsx Sheet A B
 
 ## Add time stamp
 
-If you expect the file name to record the time just insert `[time]` 'into the name for example:
+If you expect the file name to record the time just insert `_time_` 'into the name for example:
 
 Convert json to excel
 
 `excel [filePath] [fileName]`
 ```bash
-excel ./filename.json appText.[time].json
+excel ./filename.json appText._time_.json
 ```
 
 Convert excel to json
 
 `json [filePath] [sheetName] [keyColumn] [valueColumn] [fileName]`
 ```bash
-json ./filename.xlsx Sheet A B fileName.[time].js
+json ./filename.xlsx Sheet A B fileName._time_.js
 ```

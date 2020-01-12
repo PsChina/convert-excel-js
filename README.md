@@ -36,18 +36,18 @@ json ./filename.xlsx 工作表1 A B
 
 ## 添加时间戳
 
-如果你希望生成文件时记录时间，只需在文件名中插入`[time]`即可，例如:
+如果你希望生成文件时记录时间，只需在文件名中插入`_time_`即可，例如:
 
 将 json 转换为 excel 。
 
 `excel [filePath] [fileName]`
 ```bash
-excel ./filename.json appText.[time].json
+excel ./filename.json appText._time_.json
 ```
 
 将 excel 转换为 json 。
 
 `json [filePath] [sheetName] [keyColumn] [valueColumn] [fileName]`
 ```bash
-json ./filename.xlsx 工作表1 A B fileName.[time].js
+json ./filename.xlsx 工作表1 A B fileName._time_.js
 ```
