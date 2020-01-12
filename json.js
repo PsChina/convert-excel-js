@@ -21,25 +21,55 @@ const keys = [];
 const values = [];
 
 const data = wb.Sheets[TABLE_NAME];
-
+const oldKeyIsCoveredWith = (nextKey)=>{
+  const { length } = keys;
+  for(let i=0; i < length; i++){
+    if(new RegExp(`^${keys[i].split('.').join('\\.')}\\.`).test(nextKey)){
+      return i
+    }
+  }
+  return 'false'
+}
+const coveredKeysIndexs = [];
 for (const key in data) {
-
+  let nextKey;
+  // key 是覆盖的
   if (key.includes(KEY_COLUMN_NAME)) {
     // key 所在列
-    keys.push(data[key].v);
+    nextKey = data[key].v
   }
+  let coveredKeysIndex = oldKeyIsCoveredWith(nextKey);
 
+  if(coveredKeysIndex !== 'false'){
+    coveredKeysIndexs.push(coveredKeysIndex)
+  }
+  if (key.includes(KEY_COLUMN_NAME)) {
+    // key 所在列
+    keys.push(nextKey)
+  }
   if (key.includes(VALUE_COLUMN_NAME)) {
     //value 所在列
-    values.push(data[key].v);
+    values.push(data[key].v)
   }
-
 }
 
-keys.shift();
-values.shift();
+const _keys = [];
+const _values = [];
 
-function translateArraysToJSON(keys, value) {
+const oldKeysLength = keys.length
+
+for(let i=0; i<oldKeysLength; i++){
+  if(coveredKeysIndexs.includes(i)){
+    continue
+  }
+  _keys.push(keys[i]);
+  _values.push(values[i])
+}
+
+_keys.shift();
+_values.shift();
+
+function translateArraysToJSON(keys, values) {
   const MyJSON = {};
   let index = 0;
   for (const item of keys) {
@@ -51,7 +81,7 @@ function translateArraysToJSON(keys, value) {
         eval("MyJSON" + currentKey + "={}");
       }
     }
-    eval("MyJSON" + currentKey + "=" + "`" + value[index++] + "`");
+    eval("MyJSON" + currentKey + "=" + "`" + values[index++] + "`");
   }
   return MyJSON;
 }
@@ -70,7 +100,7 @@ if (fileType === "js") {
   fs.writeFileSync(
     fileName,
     `'use strict';\n\n module.exports = ${JSON.stringify(
-      translateArraysToJSON(keys, values),
+      translateArraysToJSON(_keys, _values),
       null,
       2
     )}`
@@ -78,7 +108,7 @@ if (fileType === "js") {
 } else {
   fs.writeFileSync(
     fileName,
-    `${JSON.stringify(translateArraysToJSON(keys, values), null, 2)}`
+    `${JSON.stringify(translateArraysToJSON(_keys, _values), null, 2)}`
   );
 }
 
