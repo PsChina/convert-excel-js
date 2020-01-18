@@ -24,7 +24,7 @@ const data = wb.Sheets[TABLE_NAME];
 const oldKeyIsCoveredWith = (nextKey)=>{
   const { length } = keys;
   for(let i=0; i < length; i++){
-    if(new RegExp(`^${keys[i].split('.').join('\\.')}\\.`).test(nextKey)){
+    if(new RegExp(`^${`${keys[i]}`.split('.').join('\\.')}\\.`).test(nextKey)){
       return i
     }
   }
@@ -73,7 +73,7 @@ function translateArraysToJSON(keys, values) {
   const MyJSON = {};
   let index = 0;
   for (const item of keys) {
-    const currentKeys = item.split(".");
+    const currentKeys = `${item}`.split(".");
     let currentKey = "";
     for (let el of currentKeys) {
       currentKey += `["` + el + `"]`;
